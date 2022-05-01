@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.red {
+  margin: 10px;
+  font-style: italic;
+  color: red;
+  font-size: 13px;
+}
