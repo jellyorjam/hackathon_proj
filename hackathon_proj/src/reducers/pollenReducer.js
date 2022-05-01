@@ -12,5 +12,5 @@ const pollenSlice = createSlice ({
   }
 })
 
-export const { addCovidData } = pollenSlice.actions
+export const { addPollenData } = pollenSlice.actions
 export default pollenSlice.reducer

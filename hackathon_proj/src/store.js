@@ -5,8 +5,8 @@ import pollenReducer from './reducers/pollenReducer'
 
 const store = configureStore({
   reducer: {
-    covid: covidReducer,
-    pollen: pollenReducer
+    pollen: pollenReducer,
+    covid: covidReducer
   }
 })
 
