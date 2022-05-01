@@ -1,19 +1,36 @@
-import { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  zipcode: yup.string()
+  .required()
+  .matches(/^[0-9]+$/, "Must be a number")
+  .min(5, "Must be exactly 5 digits")
+  .max(5, "Must be exactly 5 digits")
+});
 
 const Search = () => {
-  const [search, createSearch] = useState('');
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const handleSubmit = () => {
-    console.log(search)
-  }
+  const onSubmitHandler = (data) => {
+    console.log(data);
+    reset();
+  };
   return (
-    <div className="container align-content-center">
-      <br/>
-      <form onSubmit={handleSubmit}>
-        <input onChange={(e) => createSearch(e.target.value)} className="form-control search-bar" placeholder="Search Covid and Pollen data for your zip code" />
-      </form>
-    </div>
-  )
+    <form onSubmit={handleSubmit(onSubmitHandler)}>
+      <div className="container align-content-center">
+        <input {...register("zipcode")} className="form-control search-bar"
+            placeholder="Search Covid and Pollen data for your zip code" type="zipcode" required />
+        <p className="red">{errors.zipcode?.message}</p>
+        <br/>
+        <button className="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+  );
 };
 
 export default Search;
