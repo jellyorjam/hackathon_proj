@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { setZipcode } from "../reducers/covidReducer";
+import { setZipcode } from "../reducers/locationSlice";
 import { useDispatch } from "react-redux";
 
 const schema = yup.object().shape({
@@ -23,7 +23,7 @@ const Search = () => {
   const onSubmitHandler = (data) => {
     // console.log(data);
     // reset();
-   dispatch(setZipcode(data))
+   dispatch(setZipcode(data));
   };
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
