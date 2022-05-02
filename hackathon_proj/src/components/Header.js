@@ -1,15 +1,19 @@
 import React from 'react';
 import CovidData from './CovidData'
+import PollenData from './PollenData';
 import Search from './Search';
 
+
 const Header = () => {
+  debugger;
   return (
     <div>
       <br/>
       <h1>Covid or Allergies?</h1>
       <br/>
       <Search />
-      <div><CovidData /></div>
+      <CovidData />
+      <PollenData />
     </div>
   )
 }
