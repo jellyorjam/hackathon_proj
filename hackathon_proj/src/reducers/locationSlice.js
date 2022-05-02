@@ -11,6 +11,7 @@ const initialState = [];
 export const fetchLatAndLong = createAsyncThunk('location/fetchLatAndLong', async (zipcode) => {
   try {
     const response = await axios.get(locationUrl + zipcode + '&countryCode=US&apiKey=' + locationApiKey)
+    debugger;
     return response.data
   }
   catch (err) {
