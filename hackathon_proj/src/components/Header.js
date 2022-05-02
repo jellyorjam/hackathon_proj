@@ -9,7 +9,7 @@ const Header = () => {
       <h1>Covid or Allergies?</h1>
       <br/>
       <Search />
-      <div>< CovidData /></div>
+      <div><CovidData /></div>
     </div>
   )
 }
