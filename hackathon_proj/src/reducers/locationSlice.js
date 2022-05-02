@@ -23,7 +23,7 @@ const locationSlice = createSlice ({
   initialState,
   reducers: {
     setZipcode(state, action) {
-      state.push(action.payload)
+     return action.payload
     }
   },
   extraReducers: (builder) => {

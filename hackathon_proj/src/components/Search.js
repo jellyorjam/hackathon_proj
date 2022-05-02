@@ -22,8 +22,9 @@ const Search = () => {
 
   const onSubmitHandler = (data) => {
     // console.log(data);
-    // reset();
+    
    dispatch(setZipcode(data));
+   reset();
   };
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
