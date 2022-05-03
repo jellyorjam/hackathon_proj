@@ -11,6 +11,7 @@ const Header = () => {
       <h1>Covid or Allergies?</h1>
       <br/>
       <Search />
+      <br/>
       <CovidData />
       <br/>
       <PollenData />

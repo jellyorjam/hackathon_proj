@@ -9,7 +9,7 @@ const initialState = [];
 
 export const fetchCovidData = createAsyncThunk('covid/fetchCovidData', async (fips) => {
   try {
-    const response = await axios.get(covidUrl + fips + '.timeseries.json?apiKey=' + covidApiKey)
+    const response = await axios.get(covidUrl + fips + '.json?apiKey=' + covidApiKey)
     return response.data
   }
   catch (err) {
@@ -22,7 +22,14 @@ const covidSlice = createSlice ({
   initialState,
   reducers: {
     setCovidData(state, action) {
-      state.push(action.payload)
+      return {
+        population: action.payload.population,
+        weeklyNewCasesPer100k: action.payload.metrics.weeklyNewCasesPer100k,
+        testPositivityRatio: action.payload.metrics.testPositivityRatio,
+        vaxCompleted: action.payload.metrics.vaccinationsCompletedRatio,
+        vaxWithBooster: action.payload.metrics.vaccionationsAdditionalDoseRatio,
+        cdcTransmissionLevel: action.payload.cdcTransmissionLevel
+      }
     }
   },
   extraReducers: (builder) => {
