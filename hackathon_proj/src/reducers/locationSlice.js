@@ -42,7 +42,9 @@ const locationSlice = createSlice ({
       return {
         ...state,
         latitude: action.payload.location[0].latitude,
-        longitude: action.payload.location[0].longitude
+        longitude: action.payload.location[0].longitude,
+        city: action.payload.location[0].city,
+        state: action.payload.location[0].state
       }
     })
     .addCase(fetchFips.fulfilled, (state, action) => {

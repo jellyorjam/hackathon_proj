@@ -8,6 +8,8 @@ const PollenData = () => {
   const dispatch = useDispatch();
   const latitude = useSelector(state => state.location.latitude);
   const longitude = useSelector(state => state.location.longitude);
+  const city = useSelector(state => state.location.city);
+  const state = useSelector(state => state.location.state);
 
   useEffect(() => {
     if (latitude && longitude) {
@@ -19,35 +21,38 @@ const PollenData = () => {
   let plants = [];
 
   const renderPollen = () => {
-    console.log(!_.isEmpty(plants))
     if(!_.isEmpty(plants)) {
+      console.log(plants)
       return plants.map(p => {
-        switch(p.display_name){
-          case 'Grass':
+        switch(p.data_available){
+          case true:
             return (
-              <div className='col-4'>
-                <img width='40' src='https://static.thenounproject.com/png/1903-200.png' alt='grass' />
+              <div key={p.display_name} className='col-4'>
+                <p className={p.index.category}>{p.index.category}</p>
+                <img width='40' className={p.display_name} alt={p.display_name} />
                 <p>{p.display_name}</p>
               </div>
             )
-          case 'Weed':
-            return (
-              <div className='col-4'>
-                <img width='40' src='https://cdn-icons-png.flaticon.com/512/25/25207.png' alt='weed' />
+            case false:
+              return (
+                <div key={p.display_name} className='col-4'>
+                <p className='none'>None</p>
+                <img width='40' className={p.display_name} alt={p.display_name} />
                 <p>{p.display_name}</p>
               </div>
-            )
-          case 'Tree':
-            return (
-              <div className='col-4'>
-                <img width='40' src='https://www.freeiconspng.com/thumbs/tree-icon/tree-icon-png-tree-icon-bw-1.jpg' alt='tree' />
-                <p>{p.display_name}</p>
-              </div>
-            )
+              )
           default:
-            return <p>no pollen</p>
+            return <p>sorry, something went wrong</p>
         }
       })
+    }
+  }
+
+  const renderPollenHeader = () => {
+    if(!_.isEmpty(plants)){
+      return (
+        <h2 className='pollen-header'>{'Pollen levels in ' + city + ', ' + state +  ':'}</h2>
+      )
     }
   }
   
@@ -58,7 +63,8 @@ const PollenData = () => {
   }
 
   return (
-    <div className='row'>
+    <div className='container align-content-center row pollen-div'>
+      {renderPollenHeader()}
       {renderPollen()}
     </div>
   )
