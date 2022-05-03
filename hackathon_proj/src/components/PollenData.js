@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPollenData } from "../reducers/pollenSlice";
 
@@ -10,19 +10,12 @@ const PollenData = () => {
   const longitude = useSelector(state => state.location.longitude);
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
-
-  useEffect(() => {
-    if (latitude && longitude) {
-      dispatch(fetchPollenData({latitude, longitude}))
-    }
-  }, [latitude, longitude, dispatch])
-
   const pollenData = useSelector(state => state.pollen)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   let plants = [];
 
-  const renderPollen = () => {
+  const renderPollen = useCallback(() => {
     if(!_.isEmpty(plants)) {
-      console.log(plants)
       return plants.map(p => {
         switch(p.data_available){
           case true:
@@ -46,8 +39,14 @@ const PollenData = () => {
         }
       })
     }
-  }
+  }, [plants])
 
+  useEffect(() => {
+    if (latitude && longitude) {
+      dispatch(fetchPollenData({latitude, longitude}))
+    }
+  }, [latitude, longitude, dispatch])
+  
   const renderPollenHeader = () => {
     if(!_.isEmpty(plants)){
       return (
