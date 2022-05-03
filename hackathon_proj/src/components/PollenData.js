@@ -10,20 +10,17 @@ const PollenData = () => {
   const longitude = useSelector(state => state.location.longitude);
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
+  const pollenData = useSelector(state => state.pollen)
 
   useEffect(() => {
     if (latitude && longitude) {
       dispatch(fetchPollenData({latitude, longitude}))
     }
   }, [latitude, longitude, dispatch])
-
-  const pollenData = useSelector(state => state.pollen)
-  let plants = [];
-
+  
   const renderPollen = () => {
-    if(!_.isEmpty(plants)) {
-      console.log(plants)
-      return plants.map(p => {
+    if(!_.isEmpty(pollenData[0])) {
+      return pollenData[0].map(p => {
         switch(p.data_available){
           case true:
             return (
@@ -49,21 +46,18 @@ const PollenData = () => {
   }
 
   const renderPollenHeader = () => {
-    if(!_.isEmpty(plants)){
+    if(!_.isEmpty(pollenData[0])){
       return (
         <h2 className='pollen-header'>{'Pollen levels in ' + city + ', ' + state +  ':'}</h2>
       )
     }
   }
-  
-  if(pollenData[0]){
-    plants.push(pollenData[0].data[0].types.grass)
-    plants.push(pollenData[0].data[0].types.weed)
-    plants.push(pollenData[0].data[0].types.tree)
-  }
+
+  if(pollenData)
 
   return (
     <div className='container align-content-center row pollen-div'>
+      <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
       {renderPollenHeader()}
       {renderPollen()}
     </div>

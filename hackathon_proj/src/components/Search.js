@@ -21,8 +21,6 @@ const Search = () => {
   });
 
   const onSubmitHandler = (data) => {
-    // console.log(data);
-    
    dispatch(setZipcode(data));
    reset();
   };

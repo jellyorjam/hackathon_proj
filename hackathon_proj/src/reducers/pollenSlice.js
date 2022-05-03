@@ -7,13 +7,25 @@ const pollenUrl = 'https://api.breezometer.com/pollen/v2/forecast/daily?lat=';
 const endUrl = '&days=1&key='
 const pollenApiKey = '6ed80b00f59c48c1aa34e239f05265e2';
 
+const showLoad = () => {
+  document.getElementById('loading').style.display = 'block';
+};
+
+const hideLoad = () => {
+  document.getElementById('loading').style.display = 'none';
+};
+
 export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async ({latitude, longitude}) => {
   try {
+    showLoad()
     const response = await axios.get(pollenUrl + latitude + '&lon=' + longitude + endUrl + pollenApiKey + '&features=types_information,plants_information');
     return response.data;
   }
   catch (err) {
     return err;
+  }
+  finally {
+    hideLoad();
   }
 })
 
@@ -27,7 +39,9 @@ const pollenSlice = createSlice ({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPollenData.fulfilled, (state, action) => {
-      state.push(action.payload)
+      const typesObj = action.payload.data[0].types;
+      const types = Object.keys(typesObj).map(key => typesObj[key])
+      state.push(types)
     })
   }
 })
