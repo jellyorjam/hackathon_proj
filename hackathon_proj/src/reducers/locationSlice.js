@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import axios from 'axios'
 
 const locationUrl = 'https://thezipcodes.com/api/v1/search?zipCode=';
@@ -43,7 +42,9 @@ const locationSlice = createSlice ({
       return {
         ...state,
         latitude: action.payload.location[0].latitude,
-        longitude: action.payload.location[0].longitude
+        longitude: action.payload.location[0].longitude,
+        city: action.payload.location[0].city,
+        state: action.payload.location[0].state
       }
     })
     .addCase(fetchFips.fulfilled, (state, action) => {
