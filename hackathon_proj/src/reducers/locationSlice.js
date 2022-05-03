@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import axios from 'axios'
 
 const locationUrl = 'https://thezipcodes.com/api/v1/search?zipCode=';

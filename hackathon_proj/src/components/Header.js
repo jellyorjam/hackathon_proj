@@ -5,7 +5,6 @@ import Search from './Search';
 
 
 const Header = () => {
-  debugger;
   return (
     <div>
       <br/>

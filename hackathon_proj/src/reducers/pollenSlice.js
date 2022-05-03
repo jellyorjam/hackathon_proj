@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { fetchLatAndLong } from './locationSlice';
 
 const initialState = [];
 
@@ -8,9 +7,9 @@ const pollenUrl = 'https://api.breezometer.com/pollen/v2/forecast/daily?lat=';
 const endUrl = '&days=3&key='
 const pollenApiKey = '6ed80b00f59c48c1aa34e239f05265e2';
 
-export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async () => {
+export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async ({latitude, longitude}) => {
   try {
-    const response = await axios.get(pollenUrl + '45.317&lon=-91.6542' + endUrl + pollenApiKey);
+    const response = await axios.get(pollenUrl + latitude + '&lon=' + longitude + endUrl + pollenApiKey);
     return response.data;
   }
   catch (err) {
