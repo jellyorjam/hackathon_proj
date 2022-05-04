@@ -18,13 +18,14 @@ const Search = ({load}) => {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
-  });
+  })
 
   const onSubmitHandler = (data) => {
     load(true)
     dispatch(setZipcode(data));
     reset();
   };
+  
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <div className="container align-content-center">
