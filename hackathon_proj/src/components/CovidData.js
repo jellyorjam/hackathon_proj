@@ -2,40 +2,53 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchLatAndLong, fetchFips } from '../reducers/locationSlice';
-import { fetchCovidData } from '../reducers/covidSlice';
+import { fetchCovidData, setCovidData } from '../reducers/covidSlice';
+import _ from 'lodash'
 
 const CovidData = () => {
+
   const dispatch = useDispatch();
-  const zipcode = useSelector(state => state.location.zipcode);
-  const latitude = useSelector(state => state.location.latitude);
-  const longitude = useSelector(state => state.location.longitude);
-  const fips = useSelector(state => state.location.fips);
+
+  const locationState = useSelector(state => state.location)
+  const covidState = useSelector(state => state.covid)
 
   useEffect(() => {
-    if (zipcode) {
-      dispatch(fetchLatAndLong(zipcode));
+    if (locationState.zipcode) {
+      dispatch(fetchLatAndLong(locationState.zipcode));
     }
-  }, [zipcode, dispatch]);
+  }, [locationState.zipcode, dispatch]);
 
   useEffect(() => {
-    if (latitude && longitude) {
+    if (locationState.latitude && locationState.longitude) {
       const latAndLong = {
-        lat: latitude,
-        long: longitude
+        lat: locationState.latitude,
+        long: locationState.longitude
       }
-      dispatch(fetchFips(latAndLong))
+      dispatch(fetchFips(latAndLong));
     }
-  }, [latitude, longitude, dispatch])
+  }, [locationState.latitude, locationState.longitude, dispatch]);
 
   useEffect(() => {
-    if (fips) {
-      dispatch(fetchCovidData(fips))
+    if (locationState.fips) {
+      dispatch(fetchCovidData(locationState.fips))
     }
-  }, [fips, dispatch])
+  }, [locationState.fips, dispatch]);
   
+  useEffect(() => {
+    if (covidState.metrics) {
+      dispatch(setCovidData(covidState))
+    }
+  }, [covidState.metrics, covidState, dispatch]);
+
+  const getTotalCases = () => {
+    if (covidState.vaxCompleted) {
+      const totalCases = Math.floor((covidState.population / 100000) * covidState.weeklyNewCasesPer100k);
+      return totalCases
+    }
+  }
   
   return (
-    <div>Hello</div>
+    <div>{getTotalCases()}</div>
   )
 }
 

@@ -14,6 +14,7 @@ const Header = () => {
       <h1>Covid or Allergies?</h1>
       <br/>
       <Search load={load} />
+      <br/>
       <CovidData />
       <br/>
       <PollenData isLoading={isLoading} load={load} pollenData={pollen} />
