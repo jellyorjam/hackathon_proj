@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPollenData } from "../reducers/pollenSlice";
 
+export let isLoading = false;
 
 const PollenData = () => {
   const dispatch = useDispatch();
@@ -53,15 +54,14 @@ const PollenData = () => {
     }
   }
 
-  if(pollenData)
-
-  return (
-    <div className='container align-content-center row pollen-div'>
-      <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
+  const renderPollenSection = (response) => {
+    return response ? <div className='container align-content-center row pollen-div'>
       {renderPollenHeader()}
       {renderPollen()}
-    </div>
-  )
+    </div> : <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
+  }
+  console.log(isLoading)
+  return renderPollenSection(isLoading);
 };
 
-export default PollenData;
+export default PollenData; 

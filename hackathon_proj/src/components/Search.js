@@ -4,6 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { setZipcode } from "../reducers/locationSlice";
 import { useDispatch } from "react-redux";
+import { isLoading } from "./PollenData";
+
+const toggleLoad = (value) => {
+  value = !value;
+}
 
 const schema = yup.object().shape({
   zipcode: yup.string()
@@ -21,8 +26,9 @@ const Search = () => {
   });
 
   const onSubmitHandler = (data) => {
-   dispatch(setZipcode(data));
-   reset();
+    toggleLoad(isLoading);
+    dispatch(setZipcode(data));
+    reset();
   };
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
