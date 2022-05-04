@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import './covid.css';
 import Header from './components/Header';
 
 function App() {
