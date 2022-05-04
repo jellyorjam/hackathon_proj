@@ -3,23 +3,24 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPollenData } from "../reducers/pollenSlice";
 
-const PollenData = ({isLoading, load}) => {
+const PollenData = (props) => {
   const dispatch = useDispatch();
   const latitude = useSelector(state => state.location.latitude);
   const longitude = useSelector(state => state.location.longitude);
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
-  const pollenData = useSelector(state => state.pollen)
+  const pollenData = useSelector(state => state.pollen.pollenData);
 
   useEffect(() => {
     if (latitude && longitude) {
-      dispatch(fetchPollenData({latitude, longitude, load}))
+      dispatch(fetchPollenData({latitude, longitude, props}))
     }
-  }, [latitude, longitude, load, dispatch])
+  }, [latitude, longitude, props, dispatch])
   
   const renderPollen = () => {
-    if(!_.isEmpty(pollenData[0])) {
-      return pollenData[0].map(p => {
+    if(!_.isEmpty(pollenData.types)) {
+      props.load(false);
+      return pollenData.types.map(p => {
         switch(p.data_available){
           case true:
             return (
@@ -45,16 +46,14 @@ const PollenData = ({isLoading, load}) => {
   }
 
   const renderPollenHeader = () => {
-    if(!_.isEmpty(pollenData[0])){
+    if(!_.isEmpty(pollenData)){
       return (
         <h2 className='pollen-header'>{'Pollen levels in ' + city + ', ' + state +  ':'}</h2>
       )
     }
   }
 
-  console.log(isLoading)
-  if (isLoading) {
-    console.log('loading')
+  if (props.isLoading) {
     return (
       <div>
         <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
@@ -62,8 +61,7 @@ const PollenData = ({isLoading, load}) => {
     )
   }
   
-  if(!_.isEmpty(pollenData[0])){
-    load(false);
+  if(!_.isEmpty(pollenData)){
     return (
       <div className='container align-content-center row pollen-div'>
         {renderPollenHeader()}
