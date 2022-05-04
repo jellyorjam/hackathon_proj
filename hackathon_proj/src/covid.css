@@ -1,0 +1,22 @@
+.covid-div {
+  padding: 40px;
+  background-color: white;
+  border-radius: 30px;
+}
+
+.covid-header {
+  padding-bottom: 30px;
+}
+
+.covid-row {
+  display: flex;
+  justify-content: center;
+}
+
+.nums {
+  font-size: 50px;
+}
+
+.titles {
+  font-size: 25px;
+}
