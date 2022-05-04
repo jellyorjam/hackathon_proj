@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-
+import isLoading from '../components/PollenData';
 const initialState = [];
-
 const pollenUrl = 'https://api.breezometer.com/pollen/v2/forecast/daily?lat=';
 const endUrl = '&days=1&key='
 const pollenApiKey = '6ed80b00f59c48c1aa34e239f05265e2';
+
+const toggleLoad = (value) => {
+  value = !value;
+}
 
 export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async ({latitude, longitude}) => {
   try {
@@ -14,6 +17,9 @@ export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async 
   }
   catch (err) {
     return err;
+  }
+  finally {
+    toggleLoad(isLoading)
   }
 })
 
@@ -27,7 +33,9 @@ const pollenSlice = createSlice ({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPollenData.fulfilled, (state, action) => {
-      state.push(action.payload)
+      const typesObj = action.payload.data[0].types;
+      const types = Object.keys(typesObj).map(key => typesObj[key])
+      state.push(types)
     })
   }
 })
