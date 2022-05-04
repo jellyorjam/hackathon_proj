@@ -19,4 +19,18 @@
 
 .titles {
   font-size: 25px;
+  padding-bottom: 10px;
+}
+
+.fa-virus-covid {
+  color: rgb(18, 105, 18);
+  padding: 15px;
+}
+
+.progress {
+  width: 400px;
+}
+
+.small-hover {
+  font-size: 12px;
 }
