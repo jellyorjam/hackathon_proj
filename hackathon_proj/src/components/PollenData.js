@@ -10,13 +10,67 @@ const PollenData = (props) => {
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
 
-  const pollenData = useSelector(state => state.pollen.pollenData);
+  // const pollenData = useSelector(state => state.pollen.pollenData);
+  const pollenData = {
+    count: [
+      {grass_pollen: 3, tree_pollen: 108, weed_pollen: 3},
+      {grass_pollen: 3, tree_pollen: 109, weed_pollen: 3},
+      {grass_pollen: 6, tree_pollen: 107, weed_pollen: 0},
+      {grass_pollen: 1, tree_pollen: 88, weed_pollen: 1},
+      {grass_pollen: 5, tree_pollen: 64, weed_pollen: 0},
+      {grass_pollen: 0, tree_pollen: 64, weed_pollen: 0},
+      {grass_pollen: 3, tree_pollen: 70, weed_pollen: 0},
+      {grass_pollen: 2, tree_pollen: 83, weed_pollen: 2},
+      {grass_pollen: 6, tree_pollen: 183, weed_pollen: 6},
+      {grass_pollen: 6, tree_pollen: 111, weed_pollen: 0},
+      {grass_pollen: 7, tree_pollen: 58, weed_pollen: 2},
+      {grass_pollen: 3, tree_pollen: 52, weed_pollen: 3},
+      {grass_pollen: 10, tree_pollen: 112, weed_pollen: 1},
+      {grass_pollen: 8, tree_pollen: 106, weed_pollen: 0},
+      {grass_pollen: 5, tree_pollen: 57, weed_pollen: 0},
+      {grass_pollen: 3, tree_pollen: 58, weed_pollen: 3},
+      {grass_pollen: 6, tree_pollen: 53, weed_pollen: 1},
+      {grass_pollen: 7, tree_pollen: 59, weed_pollen: 2},
+      {grass_pollen: 3, tree_pollen: 52, weed_pollen: 3},
+      {grass_pollen: 10, tree_pollen: 109, weed_pollen: 1},
+      {grass_pollen: 8, tree_pollen: 103, weed_pollen: 0},
+      {grass_pollen: 9, tree_pollen: 103, weed_pollen: 1},
+      {grass_pollen: 6, tree_pollen: 103, weed_pollen: 6},
+      {grass_pollen: 12, tree_pollen: 96, weed_pollen: 3},
+      {grass_pollen: 13, tree_pollen: 104, weed_pollen: 3},
+      {grass_pollen: 6, tree_pollen: 99, weed_pollen: 6},
+      {grass_pollen: 10, tree_pollen: 113, weed_pollen: 1},
+      {grass_pollen: 9, tree_pollen: 110, weed_pollen: 0},
+      {grass_pollen: 10, tree_pollen: 111, weed_pollen: 1},
+      {grass_pollen: 6, tree_pollen: 109, weed_pollen: 6},
+      {grass_pollen: 12, tree_pollen: 103, weed_pollen: 3},
+      {grass_pollen: 13, tree_pollen: 108, weed_pollen: 4},
+      {grass_pollen: 6, tree_pollen: 104, weed_pollen: 6},
+      {grass_pollen: 10, tree_pollen: 113, weed_pollen: 1},
+      {grass_pollen: 9, tree_pollen: 61, weed_pollen: 4},
+      {grass_pollen: 7, tree_pollen: 72, weed_pollen: 0},
+      {grass_pollen: 5, tree_pollen: 64, weed_pollen: 0},
+      {grass_pollen: 6, tree_pollen: 62, weed_pollen: 0},
+      {grass_pollen: 10, tree_pollen: 64, weed_pollen: 4},
+      {grass_pollen: 8, tree_pollen: 66, weed_pollen: 2},
+      {grass_pollen: 9, tree_pollen: 72, weed_pollen: 2},
+      {grass_pollen: 9, tree_pollen: 61, weed_pollen: 4},
+      {grass_pollen: 7, tree_pollen: 72, weed_pollen: 0},
+      {grass_pollen: 6, tree_pollen: 67, weed_pollen: 0},
+      {grass_pollen: 6, tree_pollen: 67, weed_pollen: 0},
+      {grass_pollen: 10, tree_pollen: 67, weed_pollen: 4},
+      {grass_pollen: 8, tree_pollen: 70, weed_pollen: 2},
+      {grass_pollen: 10, tree_pollen: 82, weed_pollen: 3}
+    ],
+  isLoading: true,
+  risk: {grass_pollen: 'Low', tree_pollen: 'Moderate', weed_pollen: 'Low'}
+  }
 
-  useEffect(() => {
-    if (latitude && longitude) {
-      dispatch(fetchPollenData({latitude, longitude, props}))
-    }
-  }, [latitude, longitude, props, dispatch])
+  // useEffect(() => {
+  //   if (latitude && longitude) {
+  //     dispatch(fetchPollenData({latitude, longitude, props}))
+  //   }
+  // }, [latitude, longitude, props, dispatch])
   
   const renderPollen = () => {
     if(!_.isEmpty(pollenData.types)) {
