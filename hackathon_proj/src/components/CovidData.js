@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchLatAndLong, fetchFips } from '../reducers/locationSlice';
 import { fetchCovidData, setCovidData, totalCases } from '../reducers/covidSlice';
-import { PieChart } from 'reaviz';
+import { PieArcSeries, PieArcLabel, PieChart } from 'reaviz';
 
 const CovidData = () => {
 
@@ -61,7 +61,13 @@ const CovidData = () => {
   const renderCovidData = () => {
     if (covidState.readyToRender) {
       return (
-        <div className='covid-row'>
+        <div>
+           <div className='covid-row'>
+          <div className='col-4'>test</div>
+          <div className='col-4'>test</div>
+          <div className='col-4'>test</div>
+        </div>
+          <div className='covid-row'>
           <div className='col-4'>
           <i className="fa-solid fa-virus-covid fa-6x"></i>
             <div className='titles'>Total New Cases In the Past 7 Days</div>
@@ -75,23 +81,36 @@ const CovidData = () => {
           </div>
           <div className='col-2'>
              <PieChart 
+                series={<PieArcSeries colorScheme={['rgb(3, 102, 252)', 'rgb(255, 248, 225)']} explode={true} label={<PieArcLabel fontFill='white'/>}/>}
                 data={[
                         { key: '% of Population Vaccinated', data: covidState.vaxCompleted},
                         { key: '% of Population Not Vaccinated', data: 100 - covidState.vaxCompleted}
                        ]}
               />
           </div>
-          <div className='col-2'> <PieChart 
+          <div className='col-2'>
+             <PieChart 
+                series={<PieArcSeries colorScheme={['rgb(255, 248, 225)', 'rgb(3, 102, 252)']}
+                 label={<PieArcLabel fontFill='white'/>}/>}
                 data={[
                         { key: '% of Population Boosted', data: covidState.vaxWithBooster},
                         { key: '% of Population Not Boosted', data: 100 - covidState.vaxWithBooster}
                        ]}
               /></div>
         </div>
+        <div className='covid-row'>
+          <div className='col-4'>test</div>
+          <div className='col-4'>test</div>
+          <div className='col-4'>test</div>
+        </div>
+        </div>
+    
+        
       )
     }
   }
-  
+
+ 
   return (
     <div className='container align-content-center row covid-div'>
       {renderCovidHeader()}
