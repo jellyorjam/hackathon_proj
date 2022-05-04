@@ -3,20 +3,25 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPollenData } from "../reducers/pollenSlice";
 
-
-const PollenData = () => {
+const PollenData = (props) => {
   const dispatch = useDispatch();
   const latitude = useSelector(state => state.location.latitude);
   const longitude = useSelector(state => state.location.longitude);
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
-  const pollenData = useSelector(state => state.pollen)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  let plants = [];
 
-  const renderPollen = useCallback(() => {
-    if(!_.isEmpty(plants)) {
-      return plants.map(p => {
+  const pollenData = useSelector(state => state.pollen.pollenData);
+
+  useEffect(() => {
+    if (latitude && longitude) {
+      dispatch(fetchPollenData({latitude, longitude, props}))
+    }
+  }, [latitude, longitude, props, dispatch])
+  
+  const renderPollen = () => {
+    if(!_.isEmpty(pollenData.types)) {
+      props.load(false);
+      return pollenData.types.map(p => {
         switch(p.data_available){
           case true:
             return (
@@ -48,25 +53,29 @@ const PollenData = () => {
   }, [latitude, longitude, dispatch])
   
   const renderPollenHeader = () => {
-    if(!_.isEmpty(plants)){
+    if(!_.isEmpty(pollenData)){
       return (
         <h2 className='pollen-header'>{'Pollen levels in ' + city + ', ' + state +  ':'}</h2>
       )
     }
   }
-  
-  if(pollenData[0]){
-    plants.push(pollenData[0].data[0].types.grass)
-    plants.push(pollenData[0].data[0].types.weed)
-    plants.push(pollenData[0].data[0].types.tree)
-  }
 
-  return (
-    <div className='container align-content-center row pollen-div'>
-      {renderPollenHeader()}
-      {renderPollen()}
-    </div>
-  )
+  if (props.isLoading) {
+    return (
+      <div>
+        <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
+      </div>
+    )
+  }
+  
+  if(!_.isEmpty(pollenData)){
+    return (
+      <div className='container align-content-center row pollen-div'>
+        {renderPollenHeader()}
+        {renderPollen()}
+      </div>
+    )
+  }
 };
 
-export default PollenData;
+export default PollenData; 

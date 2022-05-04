@@ -71,3 +71,8 @@
 .pollen-header {
   padding-bottom: 30px;
 }
+
+#loading {
+  align-content: center;
+  max-width: 300px;
+}
