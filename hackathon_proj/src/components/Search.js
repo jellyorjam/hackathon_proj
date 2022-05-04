@@ -13,19 +13,19 @@ const schema = yup.object().shape({
   .max(5, "Must be exactly 5 digits")
 });
 
-const Search = () => {
+const Search = ({load}) => {
   const dispatch = useDispatch();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
-  });
+  })
 
   const onSubmitHandler = (data) => {
-    // console.log(data);
-    
-   dispatch(setZipcode(data));
-   reset();
+    load(true)
+    dispatch(setZipcode(data));
+    reset();
   };
+  
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <div className="container align-content-center">
