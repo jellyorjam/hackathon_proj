@@ -25,10 +25,16 @@ const covidSlice = createSlice ({
       return {
         population: action.payload.population,
         weeklyNewCasesPer100k: action.payload.metrics.weeklyNewCasesPer100k,
-        testPositivityRatio: action.payload.metrics.testPositivityRatio,
+        testPositivityRatio: Math.floor(action.payload.metrics.testPositivityRatio * 100),
         vaxCompleted: action.payload.metrics.vaccinationsCompletedRatio,
         vaxWithBooster: action.payload.metrics.vaccionationsAdditionalDoseRatio,
         cdcTransmissionLevel: action.payload.cdcTransmissionLevel
+      }
+    },
+    totalCases(state, action) {
+      return {
+        ...state,
+        totalCases: action.payload
       }
     }
   },
@@ -40,5 +46,5 @@ const covidSlice = createSlice ({
 })
 
 
-export const { setCovidData } = covidSlice.actions
+export const { setCovidData, totalCases } = covidSlice.actions
 export default covidSlice.reducer
