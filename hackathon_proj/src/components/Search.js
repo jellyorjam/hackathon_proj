@@ -4,11 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { setZipcode } from "../reducers/locationSlice";
 import { useDispatch } from "react-redux";
-import { isLoading } from "./PollenData";
-
-const toggleLoad = (value) => {
-  value = !value;
-}
 
 const schema = yup.object().shape({
   zipcode: yup.string()
@@ -18,7 +13,7 @@ const schema = yup.object().shape({
   .max(5, "Must be exactly 5 digits")
 });
 
-const Search = () => {
+const Search = ({load}) => {
   const dispatch = useDispatch();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -26,7 +21,7 @@ const Search = () => {
   });
 
   const onSubmitHandler = (data) => {
-    toggleLoad(isLoading);
+    load(true)
     dispatch(setZipcode(data));
     reset();
   };

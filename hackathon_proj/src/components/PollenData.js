@@ -3,9 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPollenData } from "../reducers/pollenSlice";
 
-export let isLoading = false;
-
-const PollenData = () => {
+const PollenData = ({isLoading, load}) => {
   const dispatch = useDispatch();
   const latitude = useSelector(state => state.location.latitude);
   const longitude = useSelector(state => state.location.longitude);
@@ -15,9 +13,9 @@ const PollenData = () => {
 
   useEffect(() => {
     if (latitude && longitude) {
-      dispatch(fetchPollenData({latitude, longitude}))
+      dispatch(fetchPollenData({latitude, longitude, load}))
     }
-  }, [latitude, longitude, dispatch])
+  }, [latitude, longitude, load, dispatch])
   
   const renderPollen = () => {
     if(!_.isEmpty(pollenData[0])) {
@@ -54,14 +52,25 @@ const PollenData = () => {
     }
   }
 
-  const renderPollenSection = (response) => {
-    return response ? <div className='container align-content-center row pollen-div'>
-      {renderPollenHeader()}
-      {renderPollen()}
-    </div> : <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
-  }
   console.log(isLoading)
-  return renderPollenSection(isLoading);
+  if (isLoading) {
+    console.log('loading')
+    return (
+      <div>
+        <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
+      </div>
+    )
+  }
+  
+  if(!_.isEmpty(pollenData[0])){
+    load(false);
+    return (
+      <div className='container align-content-center row pollen-div'>
+        {renderPollenHeader()}
+        {renderPollen()}
+      </div>
+    )
+  }
 };
 
 export default PollenData; 
