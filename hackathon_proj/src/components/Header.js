@@ -17,7 +17,7 @@ const Header = () => {
       <br/>
       <CovidData />
       <br/>
-      {/* <PollenData isLoading={isLoading} load={load} pollenData={pollen} /> */}
+      <PollenData load={load} />
     </div>
   )
 }

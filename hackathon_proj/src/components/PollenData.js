@@ -1,7 +1,11 @@
 import _ from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPollenData } from "../reducers/pollenSlice";
+import { SparklinesLine } from "react-sparklines";
+import { SparklinesBars } from "react-sparklines";
+import { SparklinesReferenceLine } from "react-sparklines";
+import { Sparklines } from "react-sparklines";
+//import { fetchPollenData } from "../reducers/pollenSlice";
 
 const PollenData = (props) => {
   const dispatch = useDispatch();
@@ -10,61 +14,7 @@ const PollenData = (props) => {
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
 
-  // const pollenData = useSelector(state => state.pollen.pollenData);
-  const pollenData = {
-    count: [
-      {grass_pollen: 3, tree_pollen: 108, weed_pollen: 3},
-      {grass_pollen: 3, tree_pollen: 109, weed_pollen: 3},
-      {grass_pollen: 6, tree_pollen: 107, weed_pollen: 0},
-      {grass_pollen: 1, tree_pollen: 88, weed_pollen: 1},
-      {grass_pollen: 5, tree_pollen: 64, weed_pollen: 0},
-      {grass_pollen: 0, tree_pollen: 64, weed_pollen: 0},
-      {grass_pollen: 3, tree_pollen: 70, weed_pollen: 0},
-      {grass_pollen: 2, tree_pollen: 83, weed_pollen: 2},
-      {grass_pollen: 6, tree_pollen: 183, weed_pollen: 6},
-      {grass_pollen: 6, tree_pollen: 111, weed_pollen: 0},
-      {grass_pollen: 7, tree_pollen: 58, weed_pollen: 2},
-      {grass_pollen: 3, tree_pollen: 52, weed_pollen: 3},
-      {grass_pollen: 10, tree_pollen: 112, weed_pollen: 1},
-      {grass_pollen: 8, tree_pollen: 106, weed_pollen: 0},
-      {grass_pollen: 5, tree_pollen: 57, weed_pollen: 0},
-      {grass_pollen: 3, tree_pollen: 58, weed_pollen: 3},
-      {grass_pollen: 6, tree_pollen: 53, weed_pollen: 1},
-      {grass_pollen: 7, tree_pollen: 59, weed_pollen: 2},
-      {grass_pollen: 3, tree_pollen: 52, weed_pollen: 3},
-      {grass_pollen: 10, tree_pollen: 109, weed_pollen: 1},
-      {grass_pollen: 8, tree_pollen: 103, weed_pollen: 0},
-      {grass_pollen: 9, tree_pollen: 103, weed_pollen: 1},
-      {grass_pollen: 6, tree_pollen: 103, weed_pollen: 6},
-      {grass_pollen: 12, tree_pollen: 96, weed_pollen: 3},
-      {grass_pollen: 13, tree_pollen: 104, weed_pollen: 3},
-      {grass_pollen: 6, tree_pollen: 99, weed_pollen: 6},
-      {grass_pollen: 10, tree_pollen: 113, weed_pollen: 1},
-      {grass_pollen: 9, tree_pollen: 110, weed_pollen: 0},
-      {grass_pollen: 10, tree_pollen: 111, weed_pollen: 1},
-      {grass_pollen: 6, tree_pollen: 109, weed_pollen: 6},
-      {grass_pollen: 12, tree_pollen: 103, weed_pollen: 3},
-      {grass_pollen: 13, tree_pollen: 108, weed_pollen: 4},
-      {grass_pollen: 6, tree_pollen: 104, weed_pollen: 6},
-      {grass_pollen: 10, tree_pollen: 113, weed_pollen: 1},
-      {grass_pollen: 9, tree_pollen: 61, weed_pollen: 4},
-      {grass_pollen: 7, tree_pollen: 72, weed_pollen: 0},
-      {grass_pollen: 5, tree_pollen: 64, weed_pollen: 0},
-      {grass_pollen: 6, tree_pollen: 62, weed_pollen: 0},
-      {grass_pollen: 10, tree_pollen: 64, weed_pollen: 4},
-      {grass_pollen: 8, tree_pollen: 66, weed_pollen: 2},
-      {grass_pollen: 9, tree_pollen: 72, weed_pollen: 2},
-      {grass_pollen: 9, tree_pollen: 61, weed_pollen: 4},
-      {grass_pollen: 7, tree_pollen: 72, weed_pollen: 0},
-      {grass_pollen: 6, tree_pollen: 67, weed_pollen: 0},
-      {grass_pollen: 6, tree_pollen: 67, weed_pollen: 0},
-      {grass_pollen: 10, tree_pollen: 67, weed_pollen: 4},
-      {grass_pollen: 8, tree_pollen: 70, weed_pollen: 2},
-      {grass_pollen: 10, tree_pollen: 82, weed_pollen: 3}
-    ],
-  isLoading: true,
-  risk: {grass_pollen: 'Low', tree_pollen: 'Moderate', weed_pollen: 'Low'}
-  }
+  const pollenData = useSelector(state => state.pollen.pollenData);
 
   // useEffect(() => {
   //   if (latitude && longitude) {
@@ -73,38 +23,55 @@ const PollenData = (props) => {
   // }, [latitude, longitude, props, dispatch])
   
   const renderPollen = () => {
-    if(!_.isEmpty(pollenData.types)) {
+    if(!_.isEmpty(pollenData.count)) {
       props.load(false);
-      return pollenData.types.map(p => {
-        switch(p.data_available){
-          case true:
-            return (
-              <div key={p.display_name} className='col-4'>
-                <p className={p.index.category}>{p.index.category}</p>
-                <img width='40' className={p.display_name} alt={p.display_name} />
-                <p>{p.display_name}</p>
-              </div>
-            )
-            case false:
-              return (
-                <div key={p.display_name} className='col-4'>
-                <p className='none'>None</p>
-                <img width='40' className={p.display_name} alt={p.display_name} />
-                <p>{p.display_name}</p>
-              </div>
-              )
-          default:
-            return <p>sorry, something went wrong</p>
-        }
+      const grass = pollenData.count.map(p => {
+        return [p.grass_pollen];
       })
+      const tree = pollenData.count.map(p => {
+        return [p.tree_pollen];
+      })
+      const weed = pollenData.count.map(p => {
+        return [p.weed_pollen];
+      })
+
+      return (
+        <div className='row'>
+          <p className='mean' >------------- mean</p>
+          <div className='col grass'>
+            <Sparklines data={grass} height='90'>
+              <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
+              <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
+              <SparklinesReferenceLine type='mean' />
+            </Sparklines>
+            <h3>Grass Pollen</h3>
+            <img src='https://static.thenounproject.com/png/1903-200.png' alt='grass' width='80' />
+            <p className={pollenData.risk.grass_pollen} >{pollenData.risk.grass_pollen} Risk</p>
+          </div>
+          <div className='col tree'>
+            <Sparklines data={tree} height='90'>
+              <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
+              <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
+              <SparklinesReferenceLine type='mean' />
+            </Sparklines>
+            <h3>Tree Pollen</h3>
+            <img src='https://cdn-icons.flaticon.com/png/512/3337/premium/3337730.png?token=exp=1651548574~hmac=ba998497cc4901bc4f3d36e37e319fb5' alt='tree' width='80' />
+            <p className={pollenData.risk.tree_pollen} >{pollenData.risk.tree_pollen} Risk</p>
+          </div>
+          <div className='col weed' >
+            <Sparklines data={weed} height='90'>
+              <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
+              <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
+              <SparklinesReferenceLine type='mean' />
+            </Sparklines>
+            <h3>Weed Pollen</h3>
+            <img src='https://cdn-icons-png.flaticon.com/512/25/25207.png' alt='weed' width='80' />
+            <p className={pollenData.risk.weed_pollen} >{pollenData.risk.weed_pollen} Risk</p>
+          </div>
+        </div>
+      )
     }
   }
-
-  useEffect(() => {
-    if (latitude && longitude) {
-      dispatch(fetchPollenData({latitude, longitude}))
-    }
-  }, [latitude, longitude, dispatch])
   
   const renderPollenHeader = () => {
     if(!_.isEmpty(pollenData)){
