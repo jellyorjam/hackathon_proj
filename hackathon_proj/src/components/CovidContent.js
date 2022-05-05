@@ -84,7 +84,7 @@ const CovidContent = () => {
             </div>  
             <div className='col-2'>
              <PieChart 
-                series={<PieArcSeries colorScheme={['rgb(235, 174, 52)', 'rgb(3, 102, 252)']} 
+                series={<PieArcSeries colorScheme={['rgb(3, 102, 252)', 'rgb(235, 174, 52)']} 
                  label={<PieArcLabel fontFill='white'/>}/>}
                 data={
                   [
