@@ -20,6 +20,11 @@
   min-width: 600px;
 }
 
+.mean {
+  font-size: 10px;
+  color: red;
+}
+
 .red {
   margin: 10px;
   font-style: italic;
@@ -27,13 +32,18 @@
   font-size: 13px;
 }
 
-.High {
+.Very {
   color: red;
   font-weight: bold;
 }
 
-.Moderate {
+.High {
   color: orangered;
+  font-weight: bold;
+}
+
+.Moderate {
+  color: orange;
   font-weight: bold;
 }
 
@@ -42,23 +52,8 @@
   font-weight: bold;
 }
 
-.none {
-  color: darkgreen;
-  font-weight: bold;
-}
-
 .Grass {
   content: url("https://static.thenounproject.com/png/1903-200.png");
-  max-width: 80px;
-}
-
-.Weed {
-  content: url("https://cdn-icons-png.flaticon.com/512/25/25207.png");
-  max-width: 80px;
-}
-
-.Tree {
-  content: url("https://cdn-icons.flaticon.com/png/512/3337/premium/3337730.png?token=exp=1651548574~hmac=ba998497cc4901bc4f3d36e37e319fb5");
   max-width: 80px;
 }
 
