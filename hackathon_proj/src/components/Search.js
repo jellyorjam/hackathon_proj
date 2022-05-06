@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { setZipcode } from "../reducers/locationSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetOnNewClick, isLoading } from "../reducers/covidSlice";
+import _ from 'lodash';
 
 const schema = yup.object().shape({
   zipcode: yup.string()
@@ -15,14 +17,24 @@ const schema = yup.object().shape({
 
 const Search = ({load}) => {
   const dispatch = useDispatch();
+  const covidState = useSelector(state => state.covid)
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
   })
 
   const onSubmitHandler = (data) => {
-    load(true)
-    dispatch(setZipcode(data));
+    load(true);
+    if (_.isEmpty(covidState)) {
+      dispatch(setZipcode(data));
+      dispatch(isLoading(true));
+    }
+    else {
+      dispatch(resetOnNewClick());
+      dispatch(setZipcode(data));
+      dispatch(isLoading(true));
+    }
+    
     reset();
   };
   

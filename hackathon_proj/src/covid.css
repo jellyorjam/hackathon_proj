@@ -19,7 +19,7 @@
 
 .titles {
   font-size: 25px;
-  padding-bottom: 10px;
+  font-weight: 300;
 }
 
 .fa-virus-covid {
@@ -33,4 +33,25 @@
 
 .small-hover {
   font-size: 12px;
+}
+
+.test-pos {
+  padding-bottom: 10px;
+}
+
+.levels {
+  font-size: 15px;
+}
+
+.meter {
+  padding-top: 10px;
+}
+
+.small-info {
+  font-size: 12px;
+  padding-top: 5px;
+}
+
+.fa-circle-question {
+  padding: 5px;
 }

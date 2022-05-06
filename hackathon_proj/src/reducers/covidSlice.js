@@ -25,7 +25,7 @@ const covidSlice = createSlice ({
       return {
         population: action.payload.population,
         weeklyNewCasesPer100k: action.payload.metrics.weeklyNewCasesPer100k,
-        testPositivityRatio: Math.floor(action.payload.metrics.testPositivityRatio * 100),
+        testPositivityRatio: action.payload.metrics.testPositivityRatio * 100,
         vaxCompleted: Math.floor(action.payload.metrics.vaccinationsCompletedRatio * 100),
         vaxWithBooster: Math.floor(action.payload.metrics.vaccinationsAdditionalDoseRatio * 100),
         cdcTransmissionLevel: action.payload.cdcTransmissionLevel
@@ -37,6 +37,18 @@ const covidSlice = createSlice ({
         totalCases: action.payload,
         readyToRender: true
       }
+    },
+    resetOnNewClick(state, action) {
+      return {
+        ...state,
+        readyToRender: false
+      }
+    },
+    isLoading(state, action) {
+      return {
+        ...state,
+        isLoading: action.payload
+      }
     }
   },
   extraReducers: (builder) => {
@@ -47,5 +59,5 @@ const covidSlice = createSlice ({
 })
 
 
-export const { setCovidData, totalCases } = covidSlice.actions
+export const { setCovidData, totalCases, resetOnNewClick, isLoading } = covidSlice.actions
 export default covidSlice.reducer
