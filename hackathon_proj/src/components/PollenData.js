@@ -5,7 +5,7 @@ import { SparklinesLine } from "react-sparklines";
 import { SparklinesBars } from "react-sparklines";
 import { SparklinesReferenceLine } from "react-sparklines";
 import { Sparklines } from "react-sparklines";
-//import { fetchPollenData } from "../reducers/pollenSlice";
+import { fetchPollenData } from "../reducers/pollenSlice";
 
 const PollenData = (props) => {
   const dispatch = useDispatch();
@@ -16,11 +16,11 @@ const PollenData = (props) => {
 
   const pollenData = useSelector(state => state.pollen.pollenData);
 
-  // useEffect(() => {
-  //   if (latitude && longitude) {
-  //     dispatch(fetchPollenData({latitude, longitude, props}))
-  //   }
-  // }, [latitude, longitude, props, dispatch])
+  useEffect(() => {
+    if (latitude && longitude) {
+      dispatch(fetchPollenData({latitude, longitude, props}))
+    }
+  }, [latitude, longitude, props, dispatch])
   
   const renderPollen = () => {
     if(!_.isEmpty(pollenData.count)) {
