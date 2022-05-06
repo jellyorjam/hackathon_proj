@@ -118,10 +118,15 @@ const CovidContent = () => {
       {renderCovidHeader()}
       {renderCovidData()}
     </div>
-  
   )
  }
-  
+ else if (!covidState.readyToRender && covidState.isLoading) {
+  return (
+    <div>
+      <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
+    </div>
+  )
+ }
 }
 
 export default CovidContent;

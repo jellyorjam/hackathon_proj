@@ -43,6 +43,12 @@ const covidSlice = createSlice ({
         ...state,
         readyToRender: false
       }
+    },
+    isLoading(state, action) {
+      return {
+        ...state,
+        isLoading: action.payload
+      }
     }
   },
   extraReducers: (builder) => {
@@ -53,5 +59,5 @@ const covidSlice = createSlice ({
 })
 
 
-export const { setCovidData, totalCases, resetOnNewClick } = covidSlice.actions
+export const { setCovidData, totalCases, resetOnNewClick, isLoading } = covidSlice.actions
 export default covidSlice.reducer

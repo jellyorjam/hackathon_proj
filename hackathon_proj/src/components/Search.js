@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { setZipcode } from "../reducers/locationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { resetOnNewClick } from "../reducers/covidSlice";
+import { resetOnNewClick, isLoading } from "../reducers/covidSlice";
 import _ from 'lodash';
 
 const schema = yup.object().shape({
@@ -27,10 +27,12 @@ const Search = ({load}) => {
     load(true);
     if (_.isEmpty(covidState)) {
       dispatch(setZipcode(data));
+      dispatch(isLoading(true));
     }
     else {
       dispatch(resetOnNewClick());
       dispatch(setZipcode(data));
+      dispatch(isLoading(true));
     }
     
     reset();

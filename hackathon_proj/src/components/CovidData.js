@@ -2,10 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchLatAndLong, fetchFips } from '../reducers/locationSlice';
-import { fetchCovidData, setCovidData, totalCases } from '../reducers/covidSlice';
+import { fetchCovidData, setCovidData, totalCases, isLoading } from '../reducers/covidSlice';
 import CovidContent from './CovidContent';
 
-const CovidData = () => {
+const CovidData = (props) => {
 
   const dispatch = useDispatch();
 
@@ -46,6 +46,7 @@ const CovidData = () => {
       dispatch(totalCases(calculateTotalCases))
     }
   }, [covidState.vaxCompleted, covidState.population, covidState.weeklyNewCasesPer100k, dispatch]);
+
 
   return (
     <div><CovidContent/></div>
