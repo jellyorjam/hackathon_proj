@@ -37,6 +37,12 @@ const covidSlice = createSlice ({
         totalCases: action.payload,
         readyToRender: true
       }
+    },
+    resetOnNewClick(state, action) {
+      return {
+        ...state,
+        readyToRender: false
+      }
     }
   },
   extraReducers: (builder) => {
@@ -47,5 +53,5 @@ const covidSlice = createSlice ({
 })
 
 
-export const { setCovidData, totalCases } = covidSlice.actions
+export const { setCovidData, totalCases, resetOnNewClick } = covidSlice.actions
 export default covidSlice.reducer

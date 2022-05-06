@@ -44,7 +44,7 @@ const CovidContent = () => {
     if (covidState.readyToRender) {
       return (
         <div>
-          <h2 className='covid-header'>{'Covid Stats in ' + checkIfFalsy(locationState.city) + ', ' + checkIfFalsy(locationState.state)+  ':'}</h2>
+          <h2 className='covid-header'>{'Covid Stats in ' + checkIfFalsy(locationState.city) + ', ' + checkIfFalsy(locationState.state) +  ':'}</h2>
         </div>
       )
     }
@@ -56,7 +56,9 @@ const CovidContent = () => {
         <div>
           <div className='covid-row'>
             <div className='col-4 titles'>Total New Cases In the Past 7 Days</div>
-            <div className='col-4 titles'>Test Positivity Ratio</div>
+            <div className='col-4 titles'>Percent of Positive Tests
+              <div className='small-hover'>Out of Tests Taken</div>
+            </div>
             <div className='col-4 titles'>Vaccination Rates 
             <div className='small-hover'>Hover to View Vaccination Rates</div></div>
           </div>
@@ -65,7 +67,7 @@ const CovidContent = () => {
               <i className="fa-solid fa-virus-covid fa-8x"></i>
               <div className='nums'>{checkIfFalsy(covidState.totalCases)}</div>
             </div>
-           <div className='col-4'>  
+            <div className='col-4'>  
               <div className='nums test-pos'>{checkIfFalsy(roundToHundredth(covidState.testPositivityRatio))}%</div>
               <div className='titles'>CDC Transmission Level</div>
               <div className='nums'>{checkIfFalsy(covidState.cdcTransmissionLevel)}</div>
@@ -93,18 +95,24 @@ const CovidContent = () => {
                   ]}
               />
             </div>
-         </div> 
-         <div className='covid-row'>
-            <div className='col-4'>Total Population: {checkIfFalsy(covidState.population.toLocaleString('en-US'))}</div>
-            <div className='col-4 small-info'><i className="fa-solid fa-circle-question"></i>To learn more about how the CDC calculates community transmission levels, <a href='https://covid.cdc.gov/covid-data-tracker/#county-view?list_select_state=all_states&list_select_county=all_counties&data-type=Risk&null=Risk'>click here.</a></div>
-            <div className='col-4 small-info'><i className="fa-solid fa-circle-question"></i>% vaccinated does not include those who received only one dose of a vaccine that requires two</div>
+          </div> 
+            <div className='covid-row'>
+              <div className='col-4'>Total Population: {checkIfFalsy(covidState.population.toLocaleString('en-US'))}</div>
+              <div className='col-4 small-info'>
+                <i className="fa-solid fa-circle-question"></i>
+                To learn more about how the CDC calculates community transmission levels, <a href='https://covid.cdc.gov/covid-data-tracker/#county-view?list_select_state=all_states&list_select_county=all_counties&data-type=Risk&null=Risk'>click here.</a>
+              </div>
+              <div className='col-4 small-info'>
+                <i className="fa-solid fa-circle-question"></i>
+                % vaccinated does not include those who received only one dose of a vaccine that requires two
+              </div>
             </div>
-         </div>
+        </div>
       )
     }
   }
 
- if (!_.isEmpty(covidState)) {
+ if (covidState.readyToRender) {
   return (
     <div className='container align-content-center row covid-div'>
       {renderCovidHeader()}
