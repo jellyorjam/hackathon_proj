@@ -44,13 +44,15 @@ const locationSlice = createSlice ({
         latitude: action.payload.location[0].latitude,
         longitude: action.payload.location[0].longitude,
         city: action.payload.location[0].city,
-        state: action.payload.location[0].state
+        state: action.payload.location[0].state,
+        readyForFetchFips: true
       }
     })
     .addCase(fetchFips.fulfilled, (state, action) => {
       return {
         ...state,
-        fips: action.payload.County.FIPS
+        fips: action.payload.County.FIPS,
+        readyForFetchCovid: true
       }
     })
   }
