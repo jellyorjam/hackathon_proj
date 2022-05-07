@@ -2,10 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchLatAndLong, fetchFips } from '../reducers/locationSlice';
-import { fetchCovidData, setCovidData, totalCases, isLoading } from '../reducers/covidSlice';
+import { fetchCovidData, setCovidData, totalCases, } from '../reducers/covidSlice';
 import CovidContent from './CovidContent';
 
-const CovidData = (props) => {
+const CovidData = () => {
 
   const dispatch = useDispatch();
 
@@ -19,20 +19,20 @@ const CovidData = (props) => {
   }, [locationState.zipcode, dispatch]);
 
   useEffect(() => {
-    if (locationState.latitude && locationState.longitude) {
+    if (locationState.readyForFetchFips) {
       const latAndLong = {
         lat: locationState.latitude,
         long: locationState.longitude
       }
       dispatch(fetchFips(latAndLong));
     }
-  }, [locationState.latitude, locationState.longitude, dispatch]);
+  }, [locationState.latitude, locationState.longitude, locationState.readyForFetchFips, dispatch]);
 
   useEffect(() => {
-    if (locationState.fips) {
+    if (locationState.readyForFetchCovid) {
       dispatch(fetchCovidData(locationState.fips))
     }
-  }, [locationState.fips, dispatch]);
+  }, [locationState.fips, locationState.readyForFetchCovid, dispatch]);
   
   useEffect(() => {
     if (covidState.metrics) {
@@ -41,11 +41,11 @@ const CovidData = (props) => {
   }, [covidState.metrics, covidState, dispatch]);
 
   useEffect(() => {
-    if (covidState.vaxCompleted) {
+    if (covidState.readyForTotalCases) {
       const calculateTotalCases = Math.floor((covidState.population / 100000) * covidState.weeklyNewCasesPer100k);
       dispatch(totalCases(calculateTotalCases))
     }
-  }, [covidState.vaxCompleted, covidState.population, covidState.weeklyNewCasesPer100k, dispatch]);
+  }, [covidState.testPositivityRatio, covidState.readyForTotalCases, covidState.population, covidState.weeklyNewCasesPer100k,    dispatch]);
 
 
   return (

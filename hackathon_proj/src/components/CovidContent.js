@@ -112,7 +112,7 @@ const CovidContent = () => {
     }
   }
 
- if (covidState.readyToRender) {
+  if (covidState.readyToRender) {
   return (
     <div className='container align-content-center row covid-div'>
       {renderCovidHeader()}
@@ -120,11 +120,11 @@ const CovidContent = () => {
     </div>
   )
  }
- else if (!covidState.readyToRender && covidState.isLoading) {
-  return (
-    <div>
-      <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
-    </div>
+  else if (!covidState.readyToRender && covidState.isLoading) {
+    return (
+      <div>
+       <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
+      </div>
   )
  }
 }
