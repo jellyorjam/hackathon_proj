@@ -7,6 +7,28 @@ import { SparklinesReferenceLine } from "react-sparklines";
 import { Sparklines } from "react-sparklines";
 import { fetchPollenData } from "../reducers/pollenSlice";
 
+const pollenData = {
+	count: [
+    {grass_pollen: 3, tree_pollen: 108, weed_pollen: 3},
+    {grass_pollen: 3, tree_pollen: 109, weed_pollen: 3},	
+    {grass_pollen: 6, tree_pollen: 107, weed_pollen: 0},
+    {grass_pollen: 1, tree_pollen: 88, weed_pollen: 1},
+    {grass_pollen: 5, tree_pollen: 64, weed_pollen: 0},
+    {grass_pollen: 0, tree_pollen: 64, weed_pollen: 0},
+    {grass_pollen: 3, tree_pollen: 70, weed_pollen: 0},
+    {grass_pollen: 2, tree_pollen: 83, weed_pollen: 2},
+    {grass_pollen: 6, tree_pollen: 183, weed_pollen: 6},
+    {grass_pollen: 6, tree_pollen: 111, weed_pollen: 0},
+    {grass_pollen: 7, tree_pollen: 58, weed_pollen: 2}
+  ],
+	isLoading: true,
+  risk: {
+    grass_pollen: 'Low',
+    tree_pollen: 'Moderate',
+    weed_pollen: 'Low'
+  }
+}
+
 const PollenData = (props) => {
   const dispatch = useDispatch();
   const latitude = useSelector(state => state.location.latitude);
@@ -14,14 +36,15 @@ const PollenData = (props) => {
   const city = useSelector(state => state.location.city);
   const state = useSelector(state => state.location.state);
 
-  const pollenData = useSelector(state => state.pollen.pollenData);
+  // const pollenData = useSelector(state => state.pollen.pollenData);
 
-  useEffect(() => {
-    if (latitude && longitude) {
-      dispatch(fetchPollenData({latitude, longitude, props}))
-    }
-  }, [latitude, longitude, props, dispatch])
-  
+  // useEffect(() => {
+  //   if (latitude && longitude) {
+  //     dispatch(fetchPollenData({latitude, longitude, props}))
+  //   }
+  // }, [latitude, longitude, props, dispatch])
+  // debugger;
+
   const renderPollen = () => {
     if(!_.isEmpty(pollenData.count)) {
       props.load(false);
@@ -55,7 +78,7 @@ const PollenData = (props) => {
               <SparklinesReferenceLine type='mean' />
             </Sparklines>
             <h3>Tree Pollen</h3>
-            <img src='https://cdn-icons.flaticon.com/png/512/3337/premium/3337730.png?token=exp=1651548574~hmac=ba998497cc4901bc4f3d36e37e319fb5' alt='tree' width='80' />
+            <img src="https://cdn-icons-png.flaticon.com/512/2990/2990966.png" alt='tree' width='80' />
             <p className={pollenData.risk.tree_pollen} >{pollenData.risk.tree_pollen} Risk</p>
           </div>
           <div className='col weed' >
