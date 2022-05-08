@@ -48,7 +48,7 @@ const PollenData = () => {
               <SparklinesReferenceLine type='mean' />
             </Sparklines>
             <h3>Tree Pollen</h3>
-            <img src="https://cdn-icons-png.flaticon.com/512/2990/2990966.png" alt='tree' width='80' />
+            <img src="https://www.pngitem.com/pimgs/m/124-1243883_palm-tree-top-png-tree-icon-png-transparent.png" alt='tree' width='80' />
             <p className={pollenData.tree[0].Category} >{pollenData.tree[0].Category} Risk</p>
           </div>
           <div className='col weed' >
