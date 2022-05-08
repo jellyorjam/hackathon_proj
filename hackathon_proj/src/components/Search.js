@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { setZipcode } from "../reducers/locationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetOnNewClick, isLoading } from "../reducers/covidSlice";
+import { pollenResetOnNewClick, fetchPollenData, pollenIsLoading } from "../reducers/pollenSlice";
 import _ from 'lodash';
 
 const schema = yup.object().shape({
@@ -15,16 +16,16 @@ const schema = yup.object().shape({
   .max(5, "Must be exactly 5 digits")
 });
 
-const Search = ({load}) => {
+const Search = () => {
   const dispatch = useDispatch();
   const covidState = useSelector(state => state.covid)
+  const pollenState = useSelector(state => state.pollen)
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
   })
 
   const onSubmitHandler = (data) => {
-    load(true);
     if (_.isEmpty(covidState)) {
       dispatch(setZipcode(data));
       dispatch(isLoading(true));
@@ -33,6 +34,16 @@ const Search = ({load}) => {
       dispatch(resetOnNewClick());
       dispatch(setZipcode(data));
       dispatch(isLoading(true));
+    }
+
+    if (_.isEmpty(pollenState)) {
+      dispatch(fetchPollenData(data.zipcode))
+      dispatch(pollenIsLoading(true))
+    }
+    else {
+      dispatch(pollenResetOnNewClick())
+      dispatch(fetchPollenData(data.zipcode))
+      dispatch(pollenIsLoading(true))
     }
     
     reset();
