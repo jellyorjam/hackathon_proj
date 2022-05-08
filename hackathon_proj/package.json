@@ -18,6 +18,7 @@
     "react-sparklines": "^1.7.0",
     "reaviz": "^13.0.9",
     "redux": "^4.2.0",
+    "source-map-loader": "^3.0.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
