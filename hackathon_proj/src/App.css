@@ -52,9 +52,8 @@
   font-weight: bold;
 }
 
-.Grass {
-  content: url("https://static.thenounproject.com/png/1903-200.png");
-  max-width: 80px;
+.grass {
+  margin-left: 30px;
 }
 
 .pollen-div {
@@ -70,4 +69,14 @@
 #loading {
   align-content: center;
   max-width: 300px;
+}
+
+.pollen-progress {
+  max-width: 300px;
+}
+
+.info {
+  padding-top: 5px;
+  font-size: 12px;
+  font-style: italic;
 }
