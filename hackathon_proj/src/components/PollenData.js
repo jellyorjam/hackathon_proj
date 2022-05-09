@@ -85,7 +85,7 @@ const PollenData = () => {
     }
   }
 
-  if (pollenIsLoading) {
+  if (_.isEmpty(pollenData) && pollenIsLoading) {
     return (
       <div>
         <img id="loading" src='https://i.gifer.com/YCZH.gif' alt='loading...'/>
