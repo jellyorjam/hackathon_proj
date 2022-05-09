@@ -11,9 +11,9 @@ const Header = () => {
       <br/>
       <Search />
       <br/>
-      <CovidData />
-      <br/>
       <PollenData />
+      <br/>
+      <CovidData />
       <br/>
     </div>
   )
