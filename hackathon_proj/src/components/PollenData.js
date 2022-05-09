@@ -48,7 +48,7 @@ const PollenData = () => {
         <div className='row'>
           <p>{`Highest Risk: ${highest}`}</p>
           <div className='col grass'>
-            <ProgressBar className='progress' max={4} now={grass} variant='success' label={`${pollenData.pollen_level_grass}/4`} />
+            <ProgressBar className='pollen-progress' max={4} now={grass} variant='success' label={`${pollenData.pollen_level_grass}/4`} />
             <p className='info'>risk level out of 4</p>
             <br/>
             <h3>Grass Pollen</h3>
@@ -56,7 +56,7 @@ const PollenData = () => {
             <p className={checkRisk(pollenData.pollen_level_grass)} >{checkRisk(pollenData.pollen_level_grass)} Risk</p>
           </div>
           <div className='col tree'>
-            <ProgressBar className='progress' max={4} now={tree} variant='success' label={`${pollenData.pollen_level_tree}/4`} />
+            <ProgressBar className='pollen-progress' max={4} now={tree} variant='success' label={`${pollenData.pollen_level_tree}/4`} />
             <p className='info'>risk level out of 4</p>
             <br/>
             <h3>Tree Pollen</h3>
@@ -64,7 +64,7 @@ const PollenData = () => {
             <p className={checkRisk(pollenData.pollen_level_tree)} >{checkRisk(pollenData.pollen_level_tree)} Risk</p>
           </div>
           <div className='col weed' >
-            <ProgressBar className='progress' max={4} now={weed} variant='success' label={`${pollenData.pollen_level_weed}/4`} />
+            <ProgressBar className='pollen-progress' max={4} now={weed} variant='success' label={`${pollenData.pollen_level_weed}/4`} />
             <p className='info'>risk level out of 4</p>
             <br/>
             <h3>Weed Pollen</h3>

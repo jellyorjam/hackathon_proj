@@ -14,6 +14,7 @@ const Header = () => {
       <CovidData />
       <br/>
       <PollenData />
+      <br/>
     </div>
   )
 }
