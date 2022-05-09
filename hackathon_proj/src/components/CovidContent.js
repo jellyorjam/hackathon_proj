@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { PieArcSeries, PieArcLabel, PieChart} from 'reaviz';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 const CovidContent = () => {
 
