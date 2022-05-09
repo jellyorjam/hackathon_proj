@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 const initialState = [];
-const pollenUrl = 'https://dataservice.accuweather.com/forecasts/v1/daily/5day/';
-const endUrl = '?apikey='
-const pollenApiKey = '%098m7cUZ5gGog7kUutlQk3loxrrWOQKgap';
+const pollenUrl = 'https://api.weatherbit.io/v2.0/current/airquality?postal_code=';
+const endUrl = '&key='
+const pollenApiKey = 'e5631d4c73c1488b8a7ef3e17b352e29';
 
 export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async (zip) => {
   try {
-    const response = await axios.get(pollenUrl + zip + endUrl + pollenApiKey + '&language=en-us&details=true&metric=false');
+    const response = await axios.get(pollenUrl + zip + endUrl + pollenApiKey);
 
     return {
       response: response.data
@@ -41,25 +41,10 @@ const pollenSlice = createSlice ({
 
   extraReducers: (builder) => {
     builder.addCase(fetchPollenData.fulfilled, (state, action) => {
-      
-      const grassArray = action.payload.response.DailyForecasts.map(day => {
-        return day.AirAndPollen[1]
-      })
-      const weedArray = action.payload.response.DailyForecasts.map(day => {
-        return day.AirAndPollen[3];
-      })
-      const treeArray = action.payload.response.DailyForecasts.map(day => {
-        return day.AirAndPollen[4];
-      })
-      console.log(treeArray)
-
       return {
         ...state,
-        data: {
-          tree: treeArray,
-          grass: grassArray,
-          weed: weedArray
-        }
+        data: action.payload.response.data[0],
+        highestRisk: action.payload.response.data[0].predominant_pollen_type
       }
     })
   }

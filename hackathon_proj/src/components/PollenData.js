@@ -1,11 +1,8 @@
 import _ from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SparklinesLine } from "react-sparklines";
-import { SparklinesBars } from "react-sparklines";
-import { SparklinesReferenceLine } from "react-sparklines";
-import { Sparklines } from "react-sparklines";
 import { fetchPollenData } from "../reducers/pollenSlice";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 const PollenData = () => {
   const dispatch = useDispatch();
@@ -21,46 +18,60 @@ const PollenData = () => {
   }, [dispatch, zipcode])
 
   const pollenData = useSelector(state => state.pollen.data);
+  const highest = useSelector(state => state.pollen.highestRisk);
+
+  const checkRisk = (level) => {
+    if(level === 0) {
+      return 'Very Low';
+    }
+    if(level === 1) {
+      return 'Low';
+    }
+    if(level === 2) {
+      return 'Moderate';
+    }
+    if(level === 3) {
+      return 'High'
+    }
+    if(level === 4) {
+      return 'Very High'
+    }
+  }
 
   const renderPollen = () => {
+    const tree = (pollenData.pollen_level_tree);
+    const grass = (pollenData.pollen_level_grass);
+    const weed = (pollenData.pollen_level_weed);
+    
     if(!_.isEmpty(pollenData)) {
-      const treeRisk = pollenData.tree.map(x => x.Value)
-      const grassRisk = pollenData.grass.map(x => x.Value)
-      const weedRisk = pollenData.weed.map(x => x.Value)
-
       return (
         <div className='row'>
-          <p className='mean' >------------- mean</p>
+          <p>{`Highest Risk: ${highest}`}</p>
           <div className='col grass'>
-            <Sparklines data={grassRisk} >
-              <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
-              <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
-              <SparklinesReferenceLine type='mean' />
-            </Sparklines>
+            <ProgressBar className='progress' max={4} now={grass} variant='success' label={`${pollenData.pollen_level_grass}/4`} />
+            <p className='info'>risk level out of 4</p>
+            <br/>
             <h3>Grass Pollen</h3>
             <img src='https://static.thenounproject.com/png/1903-200.png' alt='grass' width='80' />
-            <p className={pollenData.grass[0].Category} >{pollenData.grass[0].Category} Risk</p>
+            <p className={checkRisk(pollenData.pollen_level_grass)} >{checkRisk(pollenData.pollen_level_grass)} Risk</p>
           </div>
           <div className='col tree'>
-            <Sparklines data={treeRisk}>
-              <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
-              <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
-              <SparklinesReferenceLine type='mean' />
-            </Sparklines>
+            <ProgressBar className='progress' max={4} now={tree} variant='success' label={`${pollenData.pollen_level_tree}/4`} />
+            <p className='info'>risk level out of 4</p>
+            <br/>
             <h3>Tree Pollen</h3>
-            <img src="https://www.pngitem.com/pimgs/m/124-1243883_palm-tree-top-png-tree-icon-png-transparent.png" alt='tree' width='80' />
-            <p className={pollenData.tree[0].Category} >{pollenData.tree[0].Category} Risk</p>
+            <img src='https://www.pngitem.com/pimgs/b/50-505008_tree-pngs.png' alt='tree' width='120' />
+            <p className={checkRisk(pollenData.pollen_level_tree)} >{checkRisk(pollenData.pollen_level_tree)} Risk</p>
           </div>
           <div className='col weed' >
-            <Sparklines data={weedRisk}>
-              <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
-              <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
-              <SparklinesReferenceLine type='mean' />
-            </Sparklines>
+            <ProgressBar className='progress' max={4} now={weed} variant='success' label={`${pollenData.pollen_level_weed}/4`} />
+            <p className='info'>risk level out of 4</p>
+            <br/>
             <h3>Weed Pollen</h3>
             <img src='https://cdn-icons-png.flaticon.com/512/25/25207.png' alt='weed' width='80' />
-            <p className={pollenData.weed[0].Category} >{pollenData.weed[0].Category} Risk</p>
+            <p className={checkRisk(pollenData.pollen_level_weed)} >{checkRisk(pollenData.pollen_level_weed)} Risk</p>
           </div>
+          <p className='info'>for more info on pollen and air quality in your area <a href="https://weather.com/forecast/allergy/l/96f2f84af9a5f5d452eb0574d4e4d8a840c71b05e22264ebdc0056433a642c84">click here</a></p>
         </div>
       )
     }
