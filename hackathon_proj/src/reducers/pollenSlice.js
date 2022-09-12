@@ -3,7 +3,7 @@ import axios from 'axios';
 const initialState = [];
 const pollenUrl = 'https://api.weatherbit.io/v2.0/current/airquality?postal_code=';
 const endUrl = '&key='
-const pollenApiKey = 'e5631d4c73c1488b8a7ef3e17b352e29';
+const pollenApiKey = '054dc4133c69437ebadb3e7f7fbbfa20';
 
 export const fetchPollenData = createAsyncThunk('pollen/fetchPollenData', async (zip) => {
   try {
